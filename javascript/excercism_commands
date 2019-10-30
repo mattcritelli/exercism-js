@@ -1,1 +1,2 @@
 npm test -- <exercise name>
+exercism submit /path/to/file [/path/to/file2 ...]
