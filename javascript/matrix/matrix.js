@@ -12,21 +12,23 @@ export class Matrix {
   }
 
   get columns() {
-    let output = []
+    let output = [];
 
-    this.data
+    let rows = this.data
       .split('\n')
-      .forEach((row) => {
-        let splitRow = row.split(' ');
+      .map(row => row
+        .split(' ')
+        .map(strNum => Number(strNum)));
 
-        for(let i = 0; i < splitRow.length; i++) {
-          if(!output[i]) {
-            output[i] = []
-          }
-          output[i].push(Number(splitRow[i]));
+    for(let i = 0; i < rows.length; i++) {
+
+      for(let j = 0; j < rows[i].length; j++) {
+        if(!output[j]) {
+          output[j] = [];
         }
-      })
+        output[j].push(Number(rows[i][j]));
+      }
+    }
     return output;
   }
-
 }
