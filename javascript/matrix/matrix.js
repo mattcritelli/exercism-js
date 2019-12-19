@@ -3,14 +3,19 @@ export class Matrix {
     this.data = data;
   }
 
+  // Helper functions
   generateRows(data) {
     return data.split('\n')
-      .map(row => row
-        .split(' ')
-        .map(strNum => Number(strNum))
-      );
+      .map(row => row.split(' ').map(Number));
   }
 
+  transpose(rows) {
+    return rows[0] 
+      .map((_, i) => 
+        rows.map(row => row[i])); 
+  }
+  
+  //Lazy-loaded getters
   get rows() {
     if (!this._rows_) this._rows_ = this.generateRows(this.data);
 
@@ -21,15 +26,8 @@ export class Matrix {
     // Not an issue with our test cases but added this statement in case user
     // ran 'get columns' first since it is dependent upon this._rows_ existing
     if (!this._rows) this._rows_ = this.generateRows(this.data);
-    if (!this._columns_) this._columns_ = [];
-
-    this._rows_
-      .forEach((row, i) =>
-        row.forEach((num, j) => {
-          if(!this._columns_[j]) this._columns_[j] = [];
-          this._columns_[j][i] = num;
-        })
-    );
+    if (!this._columns_)
+      this._columns_ = this.transpose(this._rows_)
 
     return this._columns_;
   }
